@@ -1,16 +1,65 @@
 @import "tailwindcss";
 
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
 @theme inline {
-  --color-background: var(--background);
+  --color-sage: #A3B18A;
+  --color-Primary-pink: #DD1764;
+  --color-pink2: #e14072;
+  --color-pink3: #e66b8c;
+  --color-pink4: #998bb5;
+  --color-pink5: #bfb6d3;
+
+
+  --color-Primary-purple: #3F2965;
+  --color-purple2: #573f7a;
+  --color-purple3: #6e5a8e;
+  --color-purple4: #998bb5 --color-purple5:#bfb6d3 --color-sand: #DAD7CD;
+  /* #DAD7CD - Warm Sand (comfort & safety) */
+  --color-mist: #E6EEF0;
+  /* #E6EEF0 - Misty Blue-Grey (emotional softness) */
+  --color-gold: #C9A24D;
+  /* #C9A24D - Muted Gold (hope, clarity) */
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  /* Gradients */
+  --gradient-soft-calm: linear-gradient(to bottom, #bfb6d3, #998bb5);
+  --gradient-gentle-blush: linear-gradient(to bottom, #bfb6d3, #e66b8c);
+  --gradient-progress: linear-gradient(to bottom, #998bb5, #e14072);
+  --gradient-soft-rose: linear-gradient(to bottom, #e66b8c, #e14072);
+  --gradient-light-wash: linear-gradient(to bottom, #f7f3fa, #bfb6d3);
+
 }
+
+@layer utilities {
+  .bg-soft-calm {
+    background: var(--gradient-soft-calm);
+  }
+
+  .bg-gentle-blush {
+    background: var(--gradient-gentle-blush);
+  }
+
+  .bg-progress {
+    background: var(--gradient-progress);
+  }
+
+  .bg-soft-rose {
+    background: var(--gradient-soft-rose);
+  }
+
+  .bg-light-wash {
+    background: var(--gradient-light-wash);
+  }
+}
+
+
+
 
 @media (prefers-color-scheme: dark) {
   :root {

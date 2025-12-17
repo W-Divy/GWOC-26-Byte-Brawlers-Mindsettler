@@ -1,9 +1,11 @@
 import Image from "next/image";
+import HeroSection from "./components/hero_section";
 
 export default function Home() {
   return (
     <>
-    <div className="">Initial Commit</div>
+    {/* <div className="bg-sage text-mist min-h-screen min-w-[dvw]"></div> */}
+    <HeroSection />
     </>
   );
 }
