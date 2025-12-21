@@ -3,6 +3,7 @@
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.26",
     "motion": "^12.23.26",
+    "split-type": "^0.3.4",
     "tailwind-merge": "^3.4.0"
   }
 }

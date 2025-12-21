@@ -80,8 +80,8 @@ const MindsettlerHero = ({ divRef }) => {
                 <primitive
                     ref={meshRef}
                     object={scene}
-                    rotation={[0, Math.PI * 1.3, 0]}
-                    scale={1.8}
+                    rotation={[0, Math.PI * 1.1, 0]}
+                    scale={1.9}
                 />
             </Center>
         )
@@ -137,14 +137,7 @@ const MindsettlerHero = ({ divRef }) => {
     }, []);
 
     return (
-        <div ref={comp} className="relative w-screen h-screen  bg-soft-calm text-white font-sans">
-            {/* ... Overlays ... */}
-            <div ref={overlayTopRef} className="absolute top-0 left-0 w-full h-[50vh] bg-slate-100 z-50 flex items-end justify-center pb-4">
-                <span className="text-slate-900 font-bold tracking-widest uppercase text-sm opacity-50">Inhale</span>
-            </div>
-            <div ref={overlayBottomRef} className="absolute bottom-0 left-0 w-full h-[50vh] bg-slate-100 z-50 flex items-start justify-center pt-4">
-                <span className="text-slate-900 font-bold tracking-widest uppercase text-sm opacity-50">Exhale</span>
-            </div>
+        <div ref={comp} className="relative w-screen h-full  bg-soft-calm text-white font-sans">
             <div className="absolute text-center top-0 right-0">
                 <Image
                     src="/abstractlines.png"
@@ -155,10 +148,9 @@ const MindsettlerHero = ({ divRef }) => {
                 />
             </div>
 
-            <div className="flex max-h-screen h-fit absolute flex-row-reverse ml-auto items-center  justify-between w-screen  px-4 md:px-12 py-20 mx-auto  gap-8 lg:gap-12">
+            <div className="flex max-h-screen h-fit relative flex-row-reverse ml-auto items-center  justify-between w-screen  px-4 md:px-12 py-20 mx-auto  gap-8 lg:gap-12">
 
-                <div ref={divRef} className="relative z-40 wrapper bg-transparent rounded-full will-change-scroll  w-[50vw] h-[300px] md:w-80 md:h-80 lg:w-96 lg:h-96 xl:w-[28rem] xl:h-[28rem] flex items-center justify-center">
-
+                <div ref={divRef} className="relative z-40 wrapper bg-transparent rounded-full will-change-scroll  w-[50vw] h-[300px] md:w-80 md:h-80 lg:w-96 lg:h-96 overflow-visible xl:w-[28rem] xl:h-[28rem] flex items-center justify-center">
                     <div ref={circleRef} className="w-full h-full absolute z-40 bg-transparent">
                         <Canvas frameloop='always'>
                             <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={50} near={0.1} far={1000} />

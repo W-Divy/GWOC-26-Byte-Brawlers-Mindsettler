@@ -1,55 +1,165 @@
-// ShatterSection.js
-import { Center } from "@react-three/drei/core/Center";
-import { Suspense, useLayoutEffect, useRef } from "react";
-import { forwardRef } from "react";
-import { Canvas, useThree } from '@react-three/fiber'
-import { OrbitControls, useGLTF, Environment, PerspectiveCamera } from '@react-three/drei'
+"use client";
+import { section } from "framer-motion/client";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { forwardRef, use } from "react";
+import React, { useEffect, useRef } from "react";
+import Image from "next/image";
+import SplitType from "split-type";
 
 const ShatterSection = forwardRef((props, ref) => {
   const rows = 5;
   const cols = 5;
   const tiles = Array.from({ length: rows * cols });
+  const section2 = useRef<HTMLDivElement>(null);
 
-  function Model({ url }: { url: string }) {
-    const { scene } = useGLTF(url)
-    const meshRef = useRef<any>(null)
+  const card = [
+    { id: 1, image: "/assets/brain.svg", heading: "What is Psycho-Education?", content: "Structured learning about mental processes, emotions, and behaviors — empowering you with knowledge to understand yourself better." },
+    { id: 1, image: "/assets/heart.svg", heading: "Why Awareness Matters", content: "Self-awareness is the foundation of change. When you understand your patterns, you gain the power to reshape them." },
+    { id: 1, image: "/assets/compass.svg", heading: "Guidance, Not Therapy", content: "This is about education and clarity — a space to learn, reflect, and grow without clinical pressure." },
+  ]
 
-    
+  useEffect(() => {
+    gsap.fromTo(".Heading1",
+      {
+        opacity: 0,
+        y: 100,          // Start 100px lower
+        skewY: 2        // Slight tilt for a more dynamic feel
+      },
+      {
+        opacity: 1,
+        y: 0,
+        skewY: 0,
+        duration: 1.2,
+        ease: "power4.out", // Smooth deceleration
+        scrollTrigger: {
+          trigger: section2.current, // Use your section ref/class
+          start: "top 80%",     // Animation starts when the top of the section hits 80% of viewport height
+          toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
+        }
+      }
+    );
+  }, []);
+  useEffect(() => {
+    gsap.fromTo(".SubHeading1",
+      {
+        opacity: 0,
+        x: 100,          // Start 100px lower
+        skewY: 2        // Slight tilt for a more dynamic feel
+      },
+      {
+        opacity: 1,
+        x: 0,
+        skewY: 0,
+        duration: 1.2,
+        ease: "power3.out", // Smooth deceleration
+        scrollTrigger: {
+          trigger: ".Heading1", // Use your section ref/class
+          start: "top 90%",     // Animation starts when the top of the section hits 80% of viewport height
+          toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
+        }
+      }
+    );
+  }, []);
+  useEffect(() => {
+    gsap.fromTo(".Card",
+      {
+        opacity: 0,
+        y: 400,          // Start 100px lower
+        skewY: 2        // Slight tilt for a more dynamic feel
+      },
+      {
+        opacity: 1,
+        y: 0,
+        skewY: 0,
+        duration: 1.2,
+        ease: "power3.out", // Smooth deceleration
+        scrollTrigger: {
+          trigger: ".SubHeading1", // Use your section ref/class
+          start: "top 80%",     // Animation starts when the top of the section hits 80% of viewport height
+          toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
+        }
+      }
+    );
+  }, []);
+  useEffect(() => {
+    gsap.fromTo(".Card1",
+      {
+        opacity: 0,
+        x: 100,          // Start 100px lower
+        skewY: 2        // Slight tilt for a more dynamic feel
+      },
+      {
+        opacity: 1,
+        x: 0,
+        skewY: 0,
+        duration: 1.2,
+        ease: "power3.out", // Smooth deceleration
+        scrollTrigger: {
+          trigger: ".SubHeading1", // Use your section ref/class
+          start: "top 60%",     // Animation starts when the top of the section hits 80% of viewport height
+          toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
+        }
+      }
+    );
+  }, []);
+  useEffect(() => {
+    gsap.fromTo(".Card2",
+      {
+        opacity: 0,
+        x: -100,          // Start 100px lower
+        skewY: 2        // Slight tilt for a more dynamic feel
+      },
+      {
+        opacity: 1,
+        x: 0,
+        skewY: 0,
+        duration: 1.2,
+        ease: "power3.out", // Smooth deceleration
+        scrollTrigger: {
+          trigger: ".SubHeading1", // Use your section ref/class
+          start: "top 60%",     // Animation starts when the top of the section hits 80% of viewport height
+          toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
+        }
+      }
+    );
+  }, []);
 
-    return (
-      <Center>
-        <primitive
-          ref={meshRef}
-          object={scene}
-          rotation={[0, Math.PI * 1.7, 0]}
-          scale={1.1}
-        />
-      </Center>
-    )
-  }
+  useEffect(() => {
+    // 1. Split text into words
+    const text = new SplitType('.Card3', { types: 'words' });
+
+    // 2. Animate words from dim to bright
+    gsap.fromTo(text.words, 
+      { 
+        opacity: 0.2, // The "dim" state
+        color: "var(--color-Primary-purple)"// Or use your gradient colors
+      },
+      {
+        opacity: 1,   // The "lit" state
+        color:"var(--color-Primary-purple)" , // Or use your gradient colors
+        duration: 1,
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".SubHeading1",
+          start: "top 60%", // Starts when the top of text hits 80% of screen
+          end: "bottom 30%",   // Ends when it reaches 20% of screen
+          scrub: true,      // Essential: links animation to scroll distance
+          // markers: false    // Set to true to see the start/end lines during dev
+        }
+      }
+    );
+  }, []);
+
 
   return (
     <section
       ref={ref}
-      className="relative h-screen w-full bg-pink5  z-1"
+      className="relative h-full w-full bg-calm-soft overflow-hidden z-10"
     >
-      <div className=" text-center mt-20 absolute  my-auto rounded-2xl z-25 h-100 w-100 left-40">
-        <Canvas frameloop='always'>
-          <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={50} near={0.1} far={1000} />
-          <ambientLight intensity={0.5} />
-          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
-          <Environment preset="city" />
-
-          <Suspense fallback={null}>
-            <Model url="/3ds/patient_male.glb" />
-          </Suspense>
-
-
-          <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
-        </Canvas>
-      </div>
+      <div ref={section2} className="bg-white/30 backdrop-blur-[2px] z-20 h-full w-full absolute" />
       <div
-        className="grid relative w-full h-full  z-5"
+        className="grid absolute w-full h-full"
         style={{
           gridTemplateColumns: `repeat(${cols}, 1fr)`,
           gridTemplateRows: `repeat(${rows}, 1fr)`
@@ -60,16 +170,42 @@ const ShatterSection = forwardRef((props, ref) => {
           const y = Math.floor(i / cols) * 25;
 
           return (
-
-            <div key={i}
-              className="tile bg-cover  absolute  z-5 "
+            <div
+              key={i}
+              className="tile bg-cover"
               style={{
-                backgroundImage: "url('/section21.png')",
+                backgroundImage: "url('/gradient2.png')",
                 backgroundSize: "500% 500%",
                 backgroundPosition: `${x}% ${y}%`
-              }} ></div>
+              }}
+            />
           );
         })}
+      </div>
+      <div ref={section2} className="relative inset-0 h-full flex flex-col items-center justify-start  z-30">
+        <p className=" Heading1 text-center mt-8 text-lg md:text-xl text-black dark:text-white z-30">
+          The First Step is Awareness
+        </p>
+        <h2 className="SubHeading1 text-4xl md:text-6xl font-bold text-center mt-1 text-frozenWater z-30">Shatter the Limits</h2>
+        <div className="CarHead  flex Heading1 flex-col  min-[600px]:flex-row gap-5 min-[960px]:[5vw] items-center justify-evenly min-[850px]:justify-center w-full  mt-14 p-6 m-4 ">
+          {card.map((card, index) => (
+            <div key={index} className="Card overflow-hidden flex flex-col max-[600px]:w-[50vw] w-[30vw] min-[960px]:w-[22vw] min-[1050px]:w-[20vw]  bg-blueGray/20 backdrop-blur-sm rounded-2xl border-0  shadow-md items-center  text-center justify-start space-y-4 px-4 py-4 h-[-webkit-fill-available]">
+              <div className="Card1 bg-purple3/40 rounded-2xl p-2 text-center">
+              <Image
+                src={card.image}
+                alt={card.heading}
+                width={40}
+                height={40}
+                className=" invert-100"
+                />
+              </div>
+              <h2 className="Card2 text-center">{card.heading}</h2>
+              <p className=" Card3 text-Primary-purple opacity-100 transition-opacity ease-in duration-500 text-center">{card.content}
+              </p>
+            </div>
+
+          ))}
+        </div>
       </div>
     </section>
   );

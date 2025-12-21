@@ -209,6 +209,12 @@
   text-align: center;
 }
 
+.word {
+  display: inline-block;
+  margin-right: 0.25em;
+  will-change: opacity, color;
+}
+
 @theme inline {
   --color-sage: #A3B18A;
   --color-Primary-pink: #DD1764;
@@ -238,15 +244,21 @@
   --font-mono: var(--font-geist-mono);
   /* Gradients */
   --gradient-soft-calm:linear-gradient(to top,#bfb6d3 0%,#f2bfc9 100%);
+  --gradient-calm-soft:linear-gradient(to top, #f2bfc9 0%, #bfb6d3 100%);
   --gradient-gentle-blush: linear-gradient(to bottom, #E0B1cb , #f9b5c7);
  
   --gradient-light-wash: linear-gradient(to bottom, #f7f3fa, #bfb6d3);
 
 }
 
+
+
 @layer utilities {
   .bg-soft-calm {
     background: var(--gradient-soft-calm);
+  }
+  .bg-calm-soft {
+    background: var(--gradient-calm-soft);
   }
 
   .bg-gentle-blush {

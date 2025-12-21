@@ -12,39 +12,8 @@ export default function Home() {
   const mainRef = useRef<HTMLElement | null>(null);
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-
-    // We don't need setInterval anymore because we are passing the Ref directly
-    // Wait one tick to ensure Refs are populated
+    
     const ctx = gsap.context(() => {
-
-      // 1. TRANSLATION ANIMATION (Moves the 3D wrapper from Hero to Section B)
-      if (movingDivRef.current && sectionBRef.current) {
-
-        // Explicitly set initial z-index so it stays on top of Section B
-        gsap.set(movingDivRef.current, { zIndex: 100, position: 'relative' });
-
-        gsap.fromTo(movingDivRef.current,
-          {
-            xPercent: 0,
-            yPercent: 0,
-            y: 0,
-            scale: 1,
-          },
-          {
-            xPercent: -200, // Adjust this value based on how far left you want it
-            y: 600,         // Adjust based on how far down you want it
-            scale: 0.8,
-            ease: "none",
-            scrollTrigger: {
-              trigger: mainRef.current, // Start when the Page starts scrolling
-              start: "top top",
-              endTrigger: sectionBRef.current,
-              end: "center center", // Finish when Section B is centered
-              scrub: 1,
-            },
-          }
-        );
-      }
 
       // 2. TILE ANIMATION (Shatter Section)
       const tiles = sectionBRef.current?.querySelectorAll(".tile") || [];
@@ -53,8 +22,8 @@ export default function Home() {
           scrollTrigger: {
             trigger: sectionBRef.current,
             start: "top bottom",
-            end: "top center",
-            scrub: 1.5,
+            end: "top 90%",
+            scrub: 3,
           },
           scale: 0,
           opacity: 0,
@@ -80,7 +49,7 @@ export default function Home() {
       </div>
 
       {/* 2. Section B */}
-      <div className="z-4">
+      <div className=" relative z-4">
 
         <ShatterSection ref={sectionBRef} />
       </div>
