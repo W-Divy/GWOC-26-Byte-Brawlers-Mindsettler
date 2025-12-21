@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Poppins, Inter } from "next/font/google";
 import { NavbarDemo } from "./components/Navbar";
+import { Fredoka } from 'next/font/google';
+const fredoka = Fredoka({ weight: '400', subsets: ['latin'] , variable: "--font-Fredroka_one", });
 
 export const poppins = Poppins({
   subsets: ["latin"],
@@ -38,12 +40,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+
         <NavbarDemo />
+        <div className="overflow-x-clip max-h-screen">
         {children}
+        </div>
       </body>
     </html>
   );

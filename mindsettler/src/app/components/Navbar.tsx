@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { HoveredLink, Menu, MenuItem, ProductItem } from "./ui/navbar-menu";
-import {cn} from "../../../../lib/utils";
+import {cn} from "../../../lib/utils";
 import Image from "next/image";
 
 export function NavbarDemo() {
@@ -17,7 +17,7 @@ function Navbar({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null);
   return (
     <div
-      className={cn("fixed inset-x-0 max-w-screeen mx-auto z-50", className)}
+      className={cn("absolute inset-x-0 max-w-screeen mx-auto z-100", className)}
     >
       <Menu setActive={setActive}>
         <div className="">

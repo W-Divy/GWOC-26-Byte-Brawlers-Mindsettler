@@ -1,11 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import MindsettlerHero from "./StoryJourney";
+import ScrollPage from "./ScrollPage";
 
 export default function HeroSection() {
   return (
-    <section className="h-screen w-screen bg-light-wash">
-        <div className=""></div>
-    </section>
+    <>
+        <ScrollPage />
+    </>
+    
   );
 }
