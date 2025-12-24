@@ -2,6 +2,7 @@
 import HeroSection from "./components/hero_section";
 import { useRef , useLayoutEffect} from "react";
 import gsap from "gsap";
+import AboutMindSettler from "./components/About_section";
 
 export default function Home() {
   const comp = useRef(null);
@@ -24,15 +25,17 @@ export default function Home() {
     }, []);
   return (
     <div ref={comp}>
-      {/* <div className="bg-sage text-mist min-h-screen min-w-[dvw]"></div> */}
       <div ref={overlayTopRef} className="absolute top-0 left-0 w-full h-[50vh] bg-slate-100 z-500 flex items-end justify-center pb-4">
         <span className="text-slate-900 font-bold tracking-widest uppercase text-sm opacity-50">Inhale</span>
       </div>
       <div ref={overlayBottomRef} className="absolute bottom-0 left-0 w-full h-[50vh] bg-slate-100 z-500 flex items-start justify-center pt-4">
         <span className="text-slate-900 font-bold tracking-widest uppercase text-sm opacity-50">Exhale</span>
       </div>
+      <div className="bg-pink5 w-full h-full relative z-0">
+
       <HeroSection />
-      <div className="h-screen w-screen bg-Primary-purple"></div>
+      < AboutMindSettler />
+      </div>
 
     </div>
   );

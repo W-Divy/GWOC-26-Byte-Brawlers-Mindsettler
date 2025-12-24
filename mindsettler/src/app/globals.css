@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
 @import "tailwindcss";
 
 
@@ -18,196 +19,6 @@
 }
 
 * { box-sizing: border-box; }
-
-.container {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  align-items: center;
-  width: 100%;
-  max-width: 400px;
-}
-
-.input-text {
-  position: absolute;
-  z-index: 5;
-  width: 17rem;
-  font-size: 1.25rem;
-  line-height: 1.5;
-  color: var(--black);
-  transform: translate(1rem, 0.625rem);
-  overflow: hidden;
-  font-family: 'Fredoka One', sans-serif;
-}
-
-.input-text-letter {
-  display: inline-block;
-  transform-origin: center bottom;
-}
-
-.input-wrap {
-  position: relative;
-}
-
-.cloudy {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 150%;
-  transform: translate(-50%, -50%);
-}
-
-.cloudy-poofs {
-  fill: var(--white);
-}
-
-/* Fade transition for error message */
-.error-transition {
-  transition: opacity 0.3s;
-}
-
-.error-transition-enter {
-  opacity: 0;
-}
-
-.error-transition-enter-active {
-  opacity: 1;
-}
-
-.error-transition-exit {
-  opacity: 1;
-}
-
-.error-transition-exit-active {
-  opacity: 0;
-}
-
-.dreamy-input {
-  --offset-top: 0.1875rem;
-  --offset-left: -0.125rem;
-  --control-height: 3.125rem;
-  position: relative;
-}
-
-.dreamy-input::after {
-  content: '';
-  position: absolute;
-  top: var(--offset-top);
-  left: var(--offset-left);
-  height: 100%;
-  width: 100%;
-  border: 3px solid var(--black);
-  pointer-events: none;
-  transition: border 0.5s ease-in-out;
-}
-
-.dreamy-input::after,
-.dreamy-input-control {
-  border-radius: var(--control-height);
-}
-
-.dreamy-input-control {
-  width: 15.625rem;
-  height: var(--control-height);
-  padding: 0 calc(1rem + var(--control-height)) 0 1rem;
-  border: 0;
-  background-color: var(--primary-color);
-  font-family: 'Fredoka One', sans-serif;
-  font-size: 1.25rem;
-  color: var(--black);
-  caret-color: var(--secondary-color);
-  transition: background-color 0.5s ease-in-out;
-}
-
-.dreamy-input-control:focus {
-  outline: none;
-}
-
-.dreamy-input-control:disabled {
-  background-color: var(--primary-color-tint);
-}
-
-.dreamy-input:focus-within::after {
-  border-color: var(--secondary-color);
-}
-
-.dreamy-input-label,
-.dreamy-input-error {
-  position: absolute;
-  left: 1rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  font-family: 'Fredoka One', sans-serif;
-}
-
-.dreamy-input-label {
-  top: -0.75rem;
-  color: var(--black);
-}
-
-.dreamy-input-error {
-  bottom: -1.5rem;
-  color: var(--secondary-color);
-}
-
-.dreamy-input-button {
-  display: grid;
-  place-items: center;
-  position: absolute;
-  top: calc(var(--offset-top) + 3px);
-  right: 0;
-  height: var(--control-height);
-  width: var(--control-height);
-  padding: 0;
-  border: 0;
-  background-color: transparent;
-  color: var(--white);
-  cursor: pointer;
-  transition: 0.4s ease-in-out;
-}
-
-.dreamy-input-button-star {
-  fill: currentColor;
-  stroke: var(--star-stroke, transparent);
-  stroke-width: 3px;
-}
-
-.dreamy-input-button-svg {
-  width: 40%;
-  overflow: visible;
-}
-
-.dreamy-input-button:focus {
-  outline: none;
-  color: var(--secondary-color);
-}
-
-.dreamy-input-button:hover:not(:disabled) {
-  --star-stroke: var(--black);
-  transform: scale(1.2);
-  color: var(--accent-color);
-}
-
-.dreamy-input.disabled::after {
-  border-color: var(--primary-color);
-}
-
-.dreamy-input.disabled .dreamy-input-button {
-  color: var(--primary-color);
-}
-
-.dreamy-input-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.kirby-placeholder {
-  font-family: 'Fredoka One', sans-serif;
-  color: var(--black);
-  padding: 20px;
-  background-color: var(--primary-color);
-  border-radius: 10px;
-  text-align: center;
-}
 
 .word {
   display: inline-block;
@@ -249,7 +60,19 @@
  
   --gradient-light-wash: linear-gradient(to bottom, #f7f3fa, #bfb6d3);
 
+  --gradient-True-sunset: linear-gradient(to top ,#ffe65a 0%,  #fa709a 100%);
+  
+
 }
+
+body{
+  background-color: plum;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
 
 
 
@@ -267,6 +90,9 @@
 
   .bg-light-wash {
     background: var(--gradient-light-wash);
+  }
+  .bg-True-sunset {
+    background: var(--gradient-True-sunset);
   }
 }
 
@@ -322,4 +148,32 @@ body {
 
 canvas{
   opacity: 1;
+}
+
+/* Blob animation for About section */
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.font-handwriting {
+  font-family: 'Dancing Script', cursive;
 }

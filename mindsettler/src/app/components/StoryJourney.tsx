@@ -88,11 +88,11 @@ const MindsettlerHero = ({ divRef }) => {
     }
 
     useLayoutEffect(() => {
-        if (typeof window !== 'undefined') {
-            window.history.scrollRestoration = 'manual';
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
-        }
+        // if (typeof window !== 'undefined') {
+        //     window.history.scrollRestoration = 'manual';
+        //     document.documentElement.scrollTop = 0;
+        //     document.body.scrollTop = 0;
+        // }
 
         let ctx = gsap.context(() => {
             const tl = gsap.timeline();

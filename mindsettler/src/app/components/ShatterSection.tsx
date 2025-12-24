@@ -1,7 +1,7 @@
 "use client";
-import { section } from "framer-motion/client";
+
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+
 import { forwardRef, use } from "react";
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
@@ -23,7 +23,7 @@ const ShatterSection = forwardRef((props, ref) => {
     gsap.fromTo(".Heading1",
       {
         opacity: 0,
-        y: 100,          // Start 100px lower
+        y: -100,          // Start 100px lower
         skewY: 2        // Slight tilt for a more dynamic feel
       },
       {
@@ -36,6 +36,7 @@ const ShatterSection = forwardRef((props, ref) => {
           trigger: section2.current, // Use your section ref/class
           start: "top 80%",     // Animation starts when the top of the section hits 80% of viewport height
           toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
+          // scrub: 0.2,
         }
       }
     );
@@ -57,33 +58,36 @@ const ShatterSection = forwardRef((props, ref) => {
           trigger: ".Heading1", // Use your section ref/class
           start: "top 90%",     // Animation starts when the top of the section hits 80% of viewport height
           toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
+          scrub: 0.2,
         }
       }
     );
   }, []);
   useEffect(() => {
-    gsap.fromTo(".Card",
+    const tl = gsap.timeline({
+      scrollTrigger: {
+          trigger: ".SubHeading1", // Use your section ref/class
+          start: "top 70%",     // Animation starts when the top of the section hits 80% of viewport height
+          toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
+          scrub: 0.5,
+        }
+    });
+    tl.fromTo(".Card",
       {
         opacity: 0,
+        rotateZ: 90,          // Start 100px lower
         y: 400,          // Start 100px lower
         skewY: 2        // Slight tilt for a more dynamic feel
       },
       {
         opacity: 1,
+        rotateZ: 0,
         y: 0,
         skewY: 0,
         duration: 1.2,
         ease: "power3.out", // Smooth deceleration
-        scrollTrigger: {
-          trigger: ".SubHeading1", // Use your section ref/class
-          start: "top 80%",     // Animation starts when the top of the section hits 80% of viewport height
-          toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
-        }
-      }
-    );
-  }, []);
-  useEffect(() => {
-    gsap.fromTo(".Card1",
+      })
+      .fromTo(".Card1",
       {
         opacity: 0,
         x: 100,          // Start 100px lower
@@ -95,16 +99,10 @@ const ShatterSection = forwardRef((props, ref) => {
         skewY: 0,
         duration: 1.2,
         ease: "power3.out", // Smooth deceleration
-        scrollTrigger: {
-          trigger: ".SubHeading1", // Use your section ref/class
-          start: "top 60%",     // Animation starts when the top of the section hits 80% of viewport height
-          toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
-        }
+        
       }
-    );
-  }, []);
-  useEffect(() => {
-    gsap.fromTo(".Card2",
+    )
+    .fromTo(".Card2",
       {
         opacity: 0,
         x: -100,          // Start 100px lower
@@ -116,28 +114,83 @@ const ShatterSection = forwardRef((props, ref) => {
         skewY: 0,
         duration: 1.2,
         ease: "power3.out", // Smooth deceleration
-        scrollTrigger: {
-          trigger: ".SubHeading1", // Use your section ref/class
-          start: "top 60%",     // Animation starts when the top of the section hits 80% of viewport height
-          toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
-        }
+        
       }
     );
   }, []);
+  // useEffect(() => {
+  //   gsap.fromTo(".Card1",
+  //     {
+  //       opacity: 0,
+  //       x: 100,          // Start 100px lower
+  //       skewY: 2        // Slight tilt for a more dynamic feel
+  //     },
+  //     {
+  //       opacity: 1,
+  //       x: 0,
+  //       skewY: 0,
+  //       duration: 1.2,
+  //       ease: "power3.out", // Smooth deceleration
+  //       scrollTrigger: {
+  //         trigger: ".SubHeading1", // Use your section ref/class
+  //         start: "top 60%",     // Animation starts when the top of the section hits 80% of viewport height
+  //         toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
+  //       }
+  //     }
+  //   );
+  // }, []);
+  // useEffect(() => {
+  //   gsap.fromTo(".Card2",
+  //     {
+  //       opacity: 0,
+  //       x: -100,          // Start 100px lower
+  //       skewY: 2        // Slight tilt for a more dynamic feel
+  //     },
+  //     {
+  //       opacity: 1,
+  //       x: 0,
+  //       skewY: 0,
+  //       duration: 1.2,
+  //       ease: "power3.out", // Smooth deceleration
+  //       scrollTrigger: {
+  //         trigger: ".SubHeading1", // Use your section ref/class
+  //         start: "top 60%",     // Animation starts when the top of the section hits 80% of viewport height
+  //         toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
+  //       }
+  //     }
+  //   );
+    
+  // },[]);
+  useEffect(() => {
+    gsap.fromTo(".bgwite", {
+      opacity: 0,
+    }, {
+      opacity: 1,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".bgwite",
+        start: "top 60%",
+        toggleActions: "play none none reverse",
+        // markers: true,
+      }
+    });
+  }, []);
+
 
   useEffect(() => {
     // 1. Split text into words
     const text = new SplitType('.Card3', { types: 'words' });
 
     // 2. Animate words from dim to bright
-    gsap.fromTo(text.words, 
-      { 
+    gsap.fromTo(text.words,
+      {
         opacity: 0.2, // The "dim" state
         color: "var(--color-Primary-purple)"// Or use your gradient colors
       },
       {
         opacity: 1,   // The "lit" state
-        color:"var(--color-Primary-purple)" , // Or use your gradient colors
+        color: "var(--color-Primary-purple)", // Or use your gradient colors
         duration: 1,
         stagger: 0.1,
         scrollTrigger: {
@@ -152,12 +205,13 @@ const ShatterSection = forwardRef((props, ref) => {
   }, []);
 
 
+
   return (
     <section
       ref={ref}
-      className="relative h-full w-full bg-calm-soft overflow-hidden z-10"
+      className="relative h-full lg:h-screen w-full bg-calm-soft overflow-hidden z-10"
     >
-      <div ref={section2} className="bg-white/30 backdrop-blur-[2px] z-20 h-full w-full absolute" />
+      <div ref={section2} className="bgwite bg-white/30 backdrop-blur-[2px] z-20 h-full w-full absolute" />
       <div
         className="grid absolute w-full h-full"
         style={{
@@ -191,12 +245,12 @@ const ShatterSection = forwardRef((props, ref) => {
           {card.map((card, index) => (
             <div key={index} className="Card overflow-hidden flex flex-col max-[600px]:w-[50vw] w-[30vw] min-[960px]:w-[22vw] min-[1050px]:w-[20vw]  bg-blueGray/20 backdrop-blur-sm rounded-2xl border-0  shadow-md items-center  text-center justify-start space-y-4 px-4 py-4 h-[-webkit-fill-available]">
               <div className="Card1 bg-purple3/40 rounded-2xl p-2 text-center">
-              <Image
-                src={card.image}
-                alt={card.heading}
-                width={40}
-                height={40}
-                className=" invert-100"
+                <Image
+                  src={card.image}
+                  alt={card.heading}
+                  width={40}
+                  height={40}
+                  className=" invert-100"
                 />
               </div>
               <h2 className="Card2 text-center">{card.heading}</h2>
