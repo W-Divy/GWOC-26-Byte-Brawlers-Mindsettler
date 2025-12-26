@@ -14,7 +14,7 @@ const AboutMindSettler = () => {
     const panels: React.RefObject<HTMLElement>[] = []; // Initialize this array appropriately in your component
 
     const panelsRef = useRef([]);
-    
+
 
     // Data for your steps
     const steps = [
@@ -51,8 +51,8 @@ const AboutMindSettler = () => {
             let currentIndex = 0;
 
             // 1. Initial Setup: Hide all panels except the first one
-            gsap.set(panelsRef.current, {  autoAlpha: 0, display: "none" });
-            gsap.set(panelsRef.current[0], {  autoAlpha: 1, display: "block" });
+            gsap.set(panelsRef.current, { autoAlpha: 0, display: "none" });
+            gsap.set(panelsRef.current[0], { autoAlpha: 1, display: "block" });
 
             // 2. Create the Transition Function
             const gotoPanel = (index, isScrollingDown) => {
@@ -63,12 +63,12 @@ const AboutMindSettler = () => {
 
                 // Animate Current (Outgoing)
                 gsap.to(current, {
-                    
+
                     autoAlpha: 0,
                     scale: 0.6,
                     display: "none",
-                    x: isScrollingDown ?  -500 : 500, // Move opposite to scroll
-                    
+                    x: isScrollingDown ? -500 : 500, // Move opposite to scroll
+
 
                     duration: 0.6,
                     ease: "power2.inOut",
@@ -77,12 +77,12 @@ const AboutMindSettler = () => {
                 // Animate Target (Incoming)
                 gsap.fromTo(
                     target,
-                    {  autoAlpha: 0, x: isScrollingDown ? 500 : -500 },
+                    { autoAlpha: 0, x: isScrollingDown ? 500 : -500 },
                     {
                         autoAlpha: 1,
                         scale: 1,
                         x: 0,
-                        y:0,
+                        y: 0,
                         display: "block",
                         duration: 0.6,
                         ease: "power2.inOut", // "Out" ease feels snappy for arrival
@@ -130,7 +130,7 @@ const AboutMindSettler = () => {
                 opacity: 0,
                 y: 100,
                 scale: 0.7,
-                borderRadius: "100px",
+                borderRadius: "200px",
 
             },
             {
@@ -156,29 +156,62 @@ const AboutMindSettler = () => {
     useEffect(() => {
 
         const crtx = gsap.context(() => {
-            gsap.fromTo(".portrait1" , {
+            gsap.fromTo(".portrait1", {
 
                 autoAlpha: 0,
                 scale: 0.8,
                 y: 500,
-                rotateY:180,
+                rotateY: 180,
             },
-        {
-                autoAlpha: 1,
-                scale: 1,
-                y: 0,
-                rotateY:0,
-                duration: 1.5,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: aboutref.current, // Use your section ref/class
-                    start: "top 100%",     // Animation starts when the top of the section hits 80% of viewport height
-                    toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
-                    // scrub: true,
-                }
-        })
+                {
+                    autoAlpha: 1,
+                    scale: 1,
+                    y: 0,
+                    rotateY: 0,
+                    duration: 1.5,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: aboutref.current, // Use your section ref/class
+                        start: "top 100%",     // Animation starts when the top of the section hits 80% of viewport height
+                        toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
+                        // scrub: true,
+                    }
+                })
         })
         return () => crtx.revert();
+
+
+    }, []);
+
+    useEffect(() => {
+        const crtx2 = gsap.context(() => {
+            gsap.fromTo(".bgwiteabout", {
+                width: "30vw",
+                height: "70vh",
+                top: "10vh",
+                borderRadius: "40px",
+
+                y: -100,
+            }, {
+                width: "100vw",
+                height: "100vh",
+                top: "0vh",
+                borderRadius: "0%",
+                y: 0,
+                duration: 1.5,
+                ease: "power3.out",
+
+                scrollTrigger: {
+                    trigger: ".bgwiteabout", // Use your section ref/class
+                    start: "top center",     // Animation starts when the top of the section hits 80% of viewport height
+                    end: "top top",
+                    toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
+                    scrub: true,
+                    markers: true,
+                }
+            });
+        })
+        return () => crtx2.revert();
 
 
     }, []);
@@ -186,101 +219,99 @@ const AboutMindSettler = () => {
 
 
 
+
     return (
-        <div className='h-fit overflow-hidden relative w-screen '>
-            {/* <div className="h-screen w-screen"> */}
+        <>
+            <div className='h-fit overflow-hidden relative w-screen '>
+                {/* <div className="h-screen w-screen"> */}
 
-            <Image src="/gradient2rev.png" alt="About Mindsettler Background"
-                className="h-[40vh] w-screen absolute z-1 "
-                height={500}
-                width={500}
-            />
-            <div className='bg-white/30 absolute backdrop-blur-[2px] inset-0 m-0 p-0 z-2' />
-            <div ref={aboutref} className="h-fit overflow-hidden relative bg-True-sunset  inset-0 w-screen z-5 ">
-                {/* <div className='cove bg-white/30 absolute backdrop-blur-[2px] rounded inset-0 z-2' /> */}
+                <Image src="/gradient2rev.png" alt="About Mindsettler Background"
+                    className="h-[50vh] w-screen absolute z-1 "
+                    height={500}
+                    width={500}
+                />
+                <div className='bg-white/30 absolute backdrop-blur-[2px] inset-0 m-0 p-0 z-2' />
+                <div ref={aboutref} className="h-fit overflow-hidden  relative   inset-0 w-screen z-5 ">
+                    {/* <div className='cove bg-white/30 absolute backdrop-blur-[2px] rounded inset-0 z-2' /> */}
 
-                {/* </div> */}
-                <section className="py-5 lg:py-10 bg-white">
-                    <div className="container mx-auto px-6 md:px-12">
+                    {/* </div> */}
+                    <section className="py-5 lg:py-10 bg-white">
+                        <div className="container mx-auto px-6 md:px-12">
 
-                        {/* Flex Container: Stacks on mobile (col), Side-by-side on desktop (row) */}
-                        <div className="flex flex-col lg:flex-row items-center  gap-12 lg:gap-20">
+                            {/* Flex Container: Stacks on mobile (col), Side-by-side on desktop (row) */}
+                            <div className="flex flex-col lg:flex-row items-center  gap-12 lg:gap-20">
 
-                            {/* ============ LEFT SIDE: IMAGE ============ */}
-                            {/* We use w-full lg:w-1/2 to take half space on desktop */}
-                            <div className="w-full lg:w-1/2  relative flex justify-center lg:justify-end">
+                                {/* ============ LEFT SIDE: IMAGE ============ */}
+                                {/* We use w-full lg:w-1/2 to take half space on desktop */}
+                                <div className="w-full lg:w-1/2  relative flex justify-center lg:justify-end">
 
-                                {/* Optional Decorative Blur behind image for depth */}
-                                <div className="portrait1 absolute -inset-4 bg-purple-200/50 blur-3xl rounded-[50px] -z-10 transform rotate-3"></div>
+                                    {/* Optional Decorative Blur behind image for depth */}
+                                    <div className="portrait1 absolute -inset-4 bg-purple-200/50 blur-3xl rounded-[50px] -z-10 transform rotate-3"></div>
 
-                                {/* The Image Container with Arch Shape */}
-                                {/* aspect-[3/4] forces a portrait ratio. rounded-t-[4rem] creates the arch top. */}
-                                <div className="portrait1 relative w-full max-w-md aspect-[3/4] rounded-t-[4rem] rounded-b-3xl overflow-hidden shadow-2xl border-4 border-white z-10">
-                                    <img
-                                        /* REPLACE WITH YOUR FOUNDER/BRAND IMAGE */
-                                        src="/portrait.png"
-                                        alt="Founder of MindSettler"
-                                        className=" w-full h-full object-cover "
-                                    />
-                                </div>
-                            </div>
-
-
-                            {/* ============ RIGHT SIDE: CONTENT ============ */}
-                            <div className="w-full lg:w-1/2 inset-0 relative h-[-webkit-fill-available] max-lg:scale-75 flex flex-col justify-center items-start">
-
-                                {/* Small Overline Tag */}
-                                <span className="inline-block  absolute top-0 mt-10  text-pink-600 font-medium tracking-wider uppercase text-sm mb-4">
-                                    About MindSettler
-                                </span>
-
-
-                                {steps.map((step, i) => (
-                                    <div
-                                        key={step.id}
-                                        ref={(el) => (panelsRef.current[i] = el)}
-                                        className="absolute"
-                                    >
-                                        <h2 className="text-3xl relative   lg:text-5xl font-serif font-bold text-purple-900 mb-6 leading-tight">
-                                            {step.title}
-                                        </h2>
-                                        <div className="space-y-1 relative text-lg text-gray-600 leading-relaxed font-sans">
-                                            <p>
-                                                {step.content}
-                                            </p>
-
-                                        </div>
-                                        <div className="absolute bottom-10 text-sm opacity-50 uppercase tracking-widest">
-                                            Part {i + 1} / {steps.length}
-                                        </div>
+                                    {/* The Image Container with Arch Shape */}
+                                    {/* aspect-[3/4] forces a portrait ratio. rounded-t-[4rem] creates the arch top. */}
+                                    <div className="portrait1 relative w-full max-w-md aspect-[3/4] rounded-t-[4rem] rounded-b-3xl overflow-hidden shadow-2xl border-4 border-white z-10">
+                                        <img
+                                            
+                                            src="/portrait.png"
+                                            alt="Founder of MindSettler"
+                                            className=" w-full h-full object-cover "
+                                        />
                                     </div>
-                                ))}
+                                </div>
 
 
-                                {/* Optional subtle call to action or signature area */}
-                                <div className="mt-2 pt-4 border-t absolute bottom-0 mb-10 border-purple-100 flex items-center">
-                                    <span className="text-purple-800 font-medium mr-4">Are you ready to find clarity?</span>
-                                    <a href="#contact" className="text-pink-600 hover:text-pink-700 font-semibold underline-offset-4 hover:underline transition-all">
-                                        Read Our Full Story &rarr;
-                                    </a>
+                                {/* ============ RIGHT SIDE: CONTENT ============ */}
+                                <div className="w-full lg:w-1/2 inset-0 relative h-[-webkit-fill-available] max-lg:scale-75 flex flex-col justify-center items-start">
+
+                                    {/* Small Overline Tag */}
+                                    <span className="inline-block  absolute top-0 mt-10  text-pink-600 font-medium tracking-wider uppercase text-sm mb-4">
+                                        About MindSettler
+                                    </span>
+
+
+                                    {steps.map((step, i) => (
+                                        <div
+                                            key={step.id}
+                                            ref={(el) => (panelsRef.current[i] = el)}
+                                            className="absolute"
+                                        >
+                                            <h2 className="text-3xl relative   lg:text-5xl font-serif font-bold text-purple-900 mb-6 leading-tight">
+                                                {step.title}
+                                            </h2>
+                                            <div className="space-y-1 relative text-lg text-gray-600 leading-relaxed font-sans">
+                                                <p>
+                                                    {step.content}
+                                                </p>
+
+                                            </div>
+                                            <div className="absolute bottom-10 text-sm opacity-50 uppercase tracking-widest">
+                                                Part {i + 1} / {steps.length}
+                                            </div>
+                                        </div>
+                                    ))}
+
+
+                                    {/* Optional subtle call to action or signature area */}
+                                    <div className="mt-2 pt-4 border-t absolute bottom-0 mb-10 border-purple-100 flex items-center">
+                                        <span className="text-purple-800 font-medium mr-4">Are you ready to find clarity?</span>
+                                        <a href="#contact" className="text-pink-600 hover:text-pink-700 font-semibold underline-offset-4 hover:underline transition-all">
+                                            Read Our Full Story &rarr;
+                                        </a>
+                                    </div>
+
                                 </div>
 
                             </div>
-
                         </div>
-                    </div>
-                </section>
-                <section className="bg-white "></section>
-
-
-
-
-
-
+                    </section>
+                </div>
 
             </div>
-
-        </div>
+            <section className=" sec2  bg-white flex items-center min-h-screen w-screen relative ">
+                <div className="bgwiteabout bg-soft-calm mx-auto  self-center "></div>
+            </section>
+        </>
     );
 
 
