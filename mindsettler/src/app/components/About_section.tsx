@@ -190,7 +190,8 @@ const AboutMindSettler = () => {
                 height: "70vh",
                 top: "10vh",
                 borderRadius: "40px",
-
+                justifySelf: "center",
+                alignSelf: "center",
                 y: -100,
             }, {
                 width: "100vw",
@@ -203,11 +204,11 @@ const AboutMindSettler = () => {
 
                 scrollTrigger: {
                     trigger: ".bgwiteabout", // Use your section ref/class
-                    start: "top center",     // Animation starts when the top of the section hits 80% of viewport height
-                    end: "top top",
+                    start: "top 20%",     // Animation starts when the top of the section hits 80% of viewport height
+                    end: "top 5%",
                     toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
                     scrub: true,
-                    markers: true,
+                    // markers: true,
                 }
             });
         })
@@ -235,7 +236,7 @@ const AboutMindSettler = () => {
                     {/* <div className='cove bg-white/30 absolute backdrop-blur-[2px] rounded inset-0 z-2' /> */}
 
                     {/* </div> */}
-                    <section className="py-5 lg:py-10 bg-white">
+                    <section className="py-5 lg:py-10 bg-white relative z-20">
                         <div className="container mx-auto px-6 md:px-12">
 
                             {/* Flex Container: Stacks on mobile (col), Side-by-side on desktop (row) */}
@@ -308,8 +309,8 @@ const AboutMindSettler = () => {
                 </div>
 
             </div>
-            <section className=" sec2  bg-white flex items-center min-h-screen w-screen relative ">
-                <div className="bgwiteabout bg-soft-calm mx-auto  self-center "></div>
+            <section className=" sec2  bg-white flex items-center justify-center min-h-screen w-screen relative ">
+                <div className="bgwiteabout bg-soft-calm mx-auto relative  self-center "></div>
             </section>
         </>
     );

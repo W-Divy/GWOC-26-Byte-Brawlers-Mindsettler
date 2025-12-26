@@ -88,23 +88,13 @@ const MindsettlerHero = ({ divRef }) => {
     }
 
     useLayoutEffect(() => {
-        // if (typeof window !== 'undefined') {
-        //     window.history.scrollRestoration = 'manual';
-        //     document.documentElement.scrollTop = 0;
-        //     document.body.scrollTop = 0;
-        // }
+       
 
         let ctx = gsap.context(() => {
             const tl = gsap.timeline();
             gsap.set([subheadRef.current, ctaRef.current], { y: 100, opacity: 0 });
 
-            // Entrance Animations...
-            tl.to(overlayTopRef.current, {
-                height: 0, duration: 1.5, top: "-10%", ease: "power4.inOut"
-            })
-                .to(overlayBottomRef.current, {
-                    height: 0, duration: 1.5, ease: "power4.inOut", bottom: "-10%", display: "none", delay: -1.5,
-                });
+            
 
             // Image...
             tl.fromTo(heroImageRef.current,
@@ -127,8 +117,8 @@ const MindsettlerHero = ({ divRef }) => {
 
             // Text...
             tl.to(headlineRef.current, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, "-=1")
-                .to(subheadRef.current, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, "-=1.2")
-                .to(ctaRef.current, { y: 0, opacity: 0.8, duration: 1, ease: "power3.out" }, "-=0.8"); // Fixed opacity typo
+                .to(subheadRef.current, { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=1.2")
+                .to(ctaRef.current, { y: 0, opacity: 1, duration: 2, ease: "power3.out" }, "-=0.8"); // Fixed opacity typo
 
             // Float animation removed - handled by ScrollPage component
 
@@ -199,7 +189,7 @@ const MindsettlerHero = ({ divRef }) => {
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-teal-200">Chaos Within.</span>
                         </h1>
                         <div ref={subheadRef} className="text-base md:text-md lg:text-lg text-frozenWater mb-2 leading-relaxed max-w-lg mx-auto lg:mx-0  lg:text-left">
-                            <TextGenerateEffect words={"MindSettler is a psycho-education and mental well-being platform offering structured online and offline sessions to help you understand your thoughts, emotions, and life challenges in a safe and confidential space."} duration={0.6} staggerDelay={0.15} />
+                            <TextGenerateEffect words={"MindSettler is a psycho-education and mental well-being platform offering structured online and offline sessions to help you understand your thoughts, emotions, and life challenges in a safe and confidential space."} duration={0.4} staggerDelay={0.08} />
                         </div>
                         <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 justify-start">
                             <button className="px-6 md:px-8 py-3 md:py-4 bg-teal-500 hover:bg-teal-400 text-slate-900 font-bold rounded-lg transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(20,184,166,0.5)]">Book Consultation</button>
