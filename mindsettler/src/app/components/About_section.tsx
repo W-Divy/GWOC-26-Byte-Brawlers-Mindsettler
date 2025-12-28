@@ -3,7 +3,41 @@ import React, { use, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
+import { title } from 'process';
+import { desc } from 'framer-motion/client';
 
+const journeySteps = [
+    {
+        id: 1,
+        title: "Awareness",
+        description: "Recognize and acknowledge your thoughts, feelings, and patterns that affect your well-being.",
+        icon: "/assets/sparkle.svg",
+    },
+    {
+        id: 2,
+        title: "Understanding",
+        description: "Gain deeper insights into why you feel the way you do and what triggers certain responses.",
+        icon: "/assets/bulb.svg",
+    },
+    {
+        id: 3,
+        title: "First Session",
+        description: "Take your first step in a safe, confidential space where you're heard without judgment.",
+        icon: "/assets/chat.svg",
+    },
+    {
+        id: 4,
+        title: "Structured Guidance",
+        description: "Receive personalized strategies and tools tailored to your unique situation and goals.",
+        icon: "/assets/map.svg",
+    },
+    {
+        id: 5,
+        title: "Ongoing Support",
+        description: "Continue your journey with consistent support as you build lasting mental wellness habits.",
+        icon: "/assets/normalheart.svg",
+    },
+]
 
 
 // Register ScrollTrigger
@@ -14,6 +48,8 @@ const AboutMindSettler = () => {
     const panels: React.RefObject<HTMLElement>[] = []; // Initialize this array appropriately in your component
 
     const panelsRef = useRef([]);
+    const mainHead = useRef<HTMLSpanElement>(null);
+    const bottomHead = useRef<HTMLDivElement>(null);
 
 
     // Data for your steps
@@ -44,6 +80,52 @@ const AboutMindSettler = () => {
         },
     ];
 
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.fromTo(mainHead.current,
+                {
+                    opacity: 0,
+                    x: 150,
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: mainHead.current, // Use your section ref/class
+                        start: "top 70%",     // Animation starts when the top of the section hits 80% of viewport height
+                        end: "top 50%",
+                        toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
+                        // scrub: true,
+                    }
+                });
+        });
+        return () => ctx.revert();
+    }, []);
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.fromTo(bottomHead.current,
+                {
+                    opacity: 0,
+                    y: -50,
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: bottomHead.current, // Use your section ref/class
+                        start: "top 80%",     // Animation starts when the top of the section hits 80% of viewport height
+                        end: "top 60%",
+                        toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
+                        scrub: true,
+                    }
+                });
+        });
+        return () => ctx.revert();
+    }, []);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -55,7 +137,7 @@ const AboutMindSettler = () => {
             gsap.set(panelsRef.current[0], { autoAlpha: 1, display: "block" });
 
             // 2. Create the Transition Function
-            const gotoPanel = (index, isScrollingDown) => {
+            const gotoPanel = (index: number, isScrollingDown: boolean) => {
                 if (index === currentIndex) return;
 
                 const target = panelsRef.current[index];
@@ -185,17 +267,17 @@ const AboutMindSettler = () => {
 
     useEffect(() => {
         const crtx2 = gsap.context(() => {
-            gsap.fromTo(".bgwiteabout", {
-                width: "30vw",
-                height: "70vh",
+            gsap.fromTo(".sec2", {
+
+                scale: 0.5,
                 top: "10vh",
                 borderRadius: "40px",
                 justifySelf: "center",
                 alignSelf: "center",
                 y: -100,
             }, {
-                width: "100vw",
-                height: "100vh",
+
+                scale: 1,
                 top: "0vh",
                 borderRadius: "0%",
                 y: 0,
@@ -204,8 +286,8 @@ const AboutMindSettler = () => {
 
                 scrollTrigger: {
                     trigger: ".bgwiteabout", // Use your section ref/class
-                    start: "top 20%",     // Animation starts when the top of the section hits 80% of viewport height
-                    end: "top 5%",
+                    start: "top 80%",     // Animation starts when the top of the section hits 80% of viewport height
+                    end: "top center",
                     toggleActions: "play none none reverse", // Plays on scroll down, reverses on scroll up
                     scrub: true,
                     // markers: true,
@@ -218,6 +300,24 @@ const AboutMindSettler = () => {
     }, []);
 
 
+    useEffect(() => {
+        gsap.utils.toArray<HTMLElement>(".mountain").forEach(layer => {
+            const speed = parseFloat(layer.dataset.speed || '0');
+
+            gsap.to(layer, {
+                y: () => -window.innerHeight * speed,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".bgwiteabout",
+                    start: "top 40%",
+                    end: "bottom center",
+                    toggleActions: "play none none reverse",
+                    scrub: true,
+                }
+            });
+        });
+
+    }, []);
 
 
 
@@ -253,7 +353,7 @@ const AboutMindSettler = () => {
                                     {/* aspect-[3/4] forces a portrait ratio. rounded-t-[4rem] creates the arch top. */}
                                     <div className="portrait1 relative w-full max-w-md aspect-[3/4] rounded-t-[4rem] rounded-b-3xl overflow-hidden shadow-2xl border-4 border-white z-10">
                                         <img
-                                            
+
                                             src="/portrait.png"
                                             alt="Founder of MindSettler"
                                             className=" w-full h-full object-cover "
@@ -266,7 +366,7 @@ const AboutMindSettler = () => {
                                 <div className="w-full lg:w-1/2 inset-0 relative h-[-webkit-fill-available] max-lg:scale-75 flex flex-col justify-center items-start">
 
                                     {/* Small Overline Tag */}
-                                    <span className="inline-block  absolute top-0 mt-10  text-pink-600 font-medium tracking-wider uppercase text-sm mb-4">
+                                    <span ref={mainHead} className="inline-block   absolute top-0 mt-10  text-pink-600 font-medium tracking-wider uppercase text-sm mb-4">
                                         About MindSettler
                                     </span>
 
@@ -294,7 +394,7 @@ const AboutMindSettler = () => {
 
 
                                     {/* Optional subtle call to action or signature area */}
-                                    <div className="mt-2 pt-4 border-t absolute bottom-0 mb-10 border-purple-100 flex items-center">
+                                    <div ref={bottomHead} className="mt-2 pt-4 border-t absolute bottom-0 mb-10 border-purple-100 flex items-center">
                                         <span className="text-purple-800 font-medium mr-4">Are you ready to find clarity?</span>
                                         <a href="#contact" className="text-pink-600 hover:text-pink-700 font-semibold underline-offset-4 hover:underline transition-all">
                                             Read Our Full Story &rarr;
@@ -309,8 +409,109 @@ const AboutMindSettler = () => {
                 </div>
 
             </div>
-            <section className=" sec2  bg-white flex items-center justify-center min-h-screen w-screen relative ">
-                <div className="bgwiteabout bg-soft-calm mx-auto relative  self-center "></div>
+            <div className="bg-white inset-0 z-0 absolute"></div>
+            <section className=" sec2 overflow-hidden  bg-white  flex items-center justify-center min-h-screen w-screen relative ">
+                <div className="bgwiteabout lg:h-[120vh] relative self-center w-screen">
+                    <div className="bg-white/70 absolute w-screen h-full z-96">
+                        <div className=" relative top-0 pt-10 text-center  text-pink-600 font-medium tracking-wider uppercase text-sm mb-2">
+                            Your Journey
+                        </div>
+                        <h2 className="text-3xl relative  text-center lg:text-5xl font-serif font-bold text-purple-900 mb-2 leading-tight">
+                            The Path to Mental Clarity
+                        </h2>
+                        <div className="text-blueGray text-center max-w-[60vw] mx-auto mb-12 text-md font-medium leading-relaxed">
+                            Every journey begins with a single step. Here's how MindSettler guides you through your personal path to mental wellness.
+                        </div>
+
+
+                        <div className="flex items-center  justify-center lg:flex-row flex-col lw-screen:space-y-0 space-y-6 lg:space-x-6 lg:px-20 px-4">
+                            {journeySteps.map((step) => (
+                                <div key={step.id} className=" lg:w-1/5 w-full relative flex flex-col items-center text-center p-4 lg:p-6 m-2 rounded-2xl  transition ">
+
+                                    <div  className="relative card hover:-translate-y-4 transition-all duration-500 flex   flex-col items-center text-center ">
+                                        <div className="bg-white icon  transition duration-300 relative  text-xl text-white rounded-full w-fit mb-4 p-3">
+                                            <span className="absolute top-0 bg-Primary-pink w-5 px-2 h-5 self-center flex items-center justify-center text-center  text-sm rounded-full right-0">{step.id}</span>
+                                            <Image src={step.icon} alt={step.title} width={40} height={40} className='p-2' />
+                                        </div>
+                                        <h3 className="text-xl text-purple2 font-light mb-2">{step.title}</h3>
+                                        <p className="text-gray-600 relative text-sm">{step.description}</p>
+                                    </div>
+                                    <div className="bg-Primary-pink  calmLR duration-initial w-px h-4 absolute top-[50%]  right-0 self-center  z-96 ml-10 "></div>
+
+                                </div>
+                            ))}
+                        </div>
+                        <div className="mt-10 flex font-light items-center justify-center space-x-2  cursor-pointer">
+                            <span className="text-Primary-pink hover:underline transition-all duration-300  ">Start your journey today</span>
+                            <span className="text-Primary-pink font-extrabold calmLR">→</span>
+                        </div>
+                    </div>
+                    <div className="bg-[#3a6d70] absolute w-screen h-full z-0">
+
+                    </div>
+                    <div className="relative ">
+                        <Image
+                            src="/Parallax/mountainsfulll1.png"
+                            alt="About Mindsettler Background White"
+                            className="mountain w-full h-full absolute inset-0 object-cover"
+                            height={500}
+                            width={1000}
+                            data-speed="0.3"
+                        />
+                        {/* <div  className="bg-white w-20 h-20 mx-auto  rounded-full border-0 absolute inset-0"> */}
+
+                        <Image
+                            src="/Parallax/mountainsfulllastsun.png"
+                            alt="About Mindsettler Background White"
+                            className=" mountain w-full h-full  absolute inset-0 "
+                            height={500}
+                            width={500}
+                            data-speed="0.4"
+                        />
+                        {/* </div> */}
+
+                        <Image
+                            src="/Parallax/mountainsfulllast5.png"
+                            alt="About Mindsettler Background White"
+                            className="mountain absolute inset-0 w-full h-full "
+                            height={500}
+                            width={500}
+                            data-speed="0.5"
+                        />
+                        <Image
+                            src="/Parallax/mountainsfulllast4.png"
+                            alt="About Mindsettler Background White"
+                            className="mountain w-full h-full absolute inset-0 "
+                            height={500}
+                            width={500}
+                            data-speed="0.6"
+                        />
+                        <Image
+                            src="/Parallax/mountainsfulllast3.png"
+                            alt="About Mindsettler Background White"
+                            className="mountain w-full h-full absolute inset-0 "
+                            height={500}
+                            width={500}
+                            data-speed="0.6"
+                        />
+                        <Image
+                            src="/Parallax/mountainsfulllast2.png"
+                            alt="About Mindsettler Background White"
+                            className="mountain w-full h-full "
+                            height={500}
+                            width={500}
+                            data-speed="0.5"
+                        />
+                        {/* <Image
+                            src="/Parallax/mountainsfulllast.png"
+                            alt="About Mindsettler Background White"
+                            className="mountain w-full h-full absolute inset-0 "
+                            height={500}
+                            width={500}
+                            data-speed="0.9"
+                        /> */}
+                    </div>
+                </div>
             </section>
         </>
     );

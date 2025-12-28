@@ -6,6 +6,8 @@ import AboutMindSettler from "./components/About_section";
 import Process from "./components/Process";
 import Different from "./components/Different";
 import Footer from "./components/Footer";
+import Faq from "./components/Faq";
+import Booking from "./components/Booking";
 
 export default function Home() {
   const comp = useRef(null);
@@ -40,6 +42,8 @@ export default function Home() {
         < AboutMindSettler />
         <Process />
         <Different />
+        <Booking />
+        <Faq />
         <Footer />
       </div>
 

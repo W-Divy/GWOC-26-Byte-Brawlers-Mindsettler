@@ -1,13 +1,13 @@
-import EmailSubscription from "../components/email_comp"
 
 
-import React from 'react'
+
+import React from 'react';
+import Faq  from '../components/Faq';
 
 const Check = () => {
   return (
-    <div className="absolute top-50 right-10">
-      <EmailSubscription/>
-    </div>
+    <Faq />
+    
   )
 }
 

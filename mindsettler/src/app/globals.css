@@ -19,12 +19,23 @@
 }
 
 * { box-sizing: border-box; }
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
 
 .word {
   display: inline-block;
   margin-right: 0.25em;
   will-change: opacity, color;
 }
+
+
 
 @theme inline {
   --color-sage: #A3B18A;
@@ -63,6 +74,7 @@
   --gradient-True-sunset: linear-gradient(to top ,#ffe65a 0%,  #fa709a 100%);
   --gradient-cloudy-Apple: linear-gradient(to top ,#f3e7e9 0%,  #ffffff 100%);
   --gradient-cloudy-AppleRev: linear-gradient(to top ,#ffffff  0%,#f3e7e9  100%);
+  --gradient-cloudy-AppleHero: radial-gradient(to bottom  ,#ffa5be  0%,#f1f1f1  100%);
   
 
 }
@@ -75,10 +87,46 @@
   display: none;
 }
 
+@keyframes calmLeftRight {
+  0%, 100% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+
+
+.card:hover .icon {
+  transform: rotateZ(30deg) scale(0.9);
+  /* transform: scale(1.1); */
+  border: 1px solid var(--color-Primary-pink);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes spin1 {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-slow {
+  animation: spin1 10s linear infinite;
+}
+.spin-slow2 {
+  animation: spin1 12s linear infinite;
+}
 
 
 
 @layer utilities {
+  .calmTil{
+    animation: calmTilt 2s ease-in-out infinite ;
+  }
+  .calmLR{
+    animation: calmLeftRight 3s ease-in-out infinite;
+  }
   .bg-soft-calm {
     background: var(--gradient-soft-calm);
   }
@@ -98,6 +146,9 @@
   }
   .bg-cloudy-AppleRev {
     background: var(--gradient-cloudy-AppleRev);
+  }
+  .bg-cloudy-AppleHero {
+    background: var(--gradient-cloudy-AppleHero);
   }
 }
 

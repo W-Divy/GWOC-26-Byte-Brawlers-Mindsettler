@@ -29,7 +29,7 @@ const Footer = () => {
                     <Link href="/" className="link link-hover">Cookie policy</Link>
                 </nav>
             </footer>
-            <footer className="footer bg-Primary-purple text-blueGray border-base-300 border-t px-10 py-4">
+            <footer className="footer relative bg-Primary-purple text-blueGray border-base-300 border-t px-10 py-4">
                 <aside className="grid-flow-col items-center">
                     <Image
                     src="/Mindsettler_logo2.jpg"

@@ -5,12 +5,6 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger);
 
-// const steps = [
-//     { title: "Choose Service", icon: "📋" },
-//     { title: "Pick Date", icon: "📅" },
-//     { title: "Make Payment", icon: "💳" },
-//     { title: "Confirm Session", icon: "✅" },
-// ];
 
 const Process = () => {
 

@@ -1,5 +1,5 @@
 "use client";
-import React, { useLayoutEffect, useRef, useEffect, Suspense } from 'react';
+import React, { useLayoutEffect, useRef, useEffect, Suspense, useMemo } from 'react';
 import gsap from 'gsap';
 import Image from 'next/image';
 import Shuffle from './Shuffle_text';
@@ -7,6 +7,8 @@ import { TextGenerateEffect } from './text_generate_effect';
 import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls, useGLTF, Center, Environment, PerspectiveCamera } from '@react-three/drei'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import * as THREE from 'three'
+
 
 // Register plugin immediately
 if (typeof window !== "undefined") {
@@ -37,8 +39,7 @@ function ResizeHandler() {
 
 const MindsettlerHero = ({ divRef }) => {
     const comp = useRef(null);
-    const overlayTopRef = useRef(null);
-    const overlayBottomRef = useRef(null);
+
     const heroImageRef = useRef(null);
     const headlineRef = useRef(null);
     const subheadRef = useRef(null);
@@ -46,37 +47,79 @@ const MindsettlerHero = ({ divRef }) => {
     const circleRef = useRef(null);
 
     // 1. Move Preload Outside to prevent memory leaks
-    useLayoutEffect(() => {
-        useGLTF.preload('/3ds/base_basic_pbr.glb')
-    }, [])
+    // useLayoutEffect(() => {
+    //     useGLTF.preload('/3ds/base_basic_pbr.glb')
+    // }, [])
 
     function Model({ url }: { url: string }) {
-        const { scene } = useGLTF(url)
-        const meshRef = useRef<any>(null)
+        // 1. Load the data from the cache
+        const { scene: originalScene } = useGLTF(url);
 
+        // 2. CLONE IT. This creates a unique instance for this component.
+        // If we don't clone, we are modifying the global cached object.
+        const scene = useMemo(() => originalScene.clone(true), [originalScene]);
+
+        const meshRef = useRef<THREE.Group>(null);
+
+        // --- CLEANUP LOGIC ---
+        useEffect(() => {
+            // Run this ONLY when the component unmounts
+            return () => {
+                // Traverse the CLONED scene (not the original)
+                scene.traverse((child) => {
+                    if ((child as THREE.Mesh).isMesh) {
+                        const mesh = child as THREE.Mesh;
+
+                        // Dispose Geometry
+                        mesh.geometry?.dispose();
+
+                        // Dispose Materials & Textures
+                        const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+
+                        materials.forEach((mat: any) => {
+                            // Dispose textures found in the material
+                            for (const key in mat) {
+                                const value = mat[key];
+                                if (value && typeof value === 'object' && 'minFilter' in value) {
+                                    value.dispose();
+                                }
+                            }
+                            // Dispose material
+                            mat.dispose();
+                        });
+                    }
+                });
+
+                // Optional: If you want to force clear the global cache as well
+                // useGLTF.clear(url); 
+            };
+        }, [scene, url]);
+
+        // --- ANIMATION LOGIC ---
         useLayoutEffect(() => {
-            if (!meshRef.current) return
-            const ctx = gsap.context(() => {
+            if (!meshRef.current) return;
 
-                // 2. THE ANIMATION FIX
+            const ctx = gsap.context(() => {
                 gsap.to(meshRef.current.rotation, {
                     y: Math.PI * 2.5,
                     ease: "none",
                     scrollTrigger: {
                         trigger: ".wrapper",
-                        start: "top bottom", // Starts when top of wrapper hits bottom of screen
-                        end: "bottom top",   // Ends when bottom of wrapper hits top of screen
+                        start: "top bottom",
+                        end: "bottom top",
                         scrub: 1,
-                        invalidateOnRefresh: true, // CRITICAL: Recalculates start/end on resize
-                        markers: false, // Set to true to debug where the start/end lines are
+                        invalidateOnRefresh: true,
+                        
                     }
-                })
-            })
-            return () => ctx.revert()
-        }, [])
+                });
+            });
+
+            return () => ctx.revert();
+        }, []);
 
         return (
             <Center>
+                {/* Pass the CLONED scene to the primitive */}
                 <primitive
                     ref={meshRef}
                     object={scene}
@@ -84,17 +127,17 @@ const MindsettlerHero = ({ divRef }) => {
                     scale={1.9}
                 />
             </Center>
-        )
+        );
     }
 
     useLayoutEffect(() => {
-       
+
 
         let ctx = gsap.context(() => {
             const tl = gsap.timeline();
             gsap.set([subheadRef.current, ctaRef.current], { y: 100, opacity: 0 });
 
-            
+
 
             // Image...
             tl.fromTo(heroImageRef.current,
@@ -127,7 +170,16 @@ const MindsettlerHero = ({ divRef }) => {
     }, []);
 
     return (
-        <div ref={comp} className="relative w-screen h-full  bg-soft-calm text-white font-sans">
+        <div ref={comp} className="relative w-screen h-full  text-white font-sans">
+            <div className="absolute  w-screen h-full ">
+                <Image
+                    ref={heroImageRef}
+                    src="/gradienthero.jpeg"
+                    alt="Mindsettler Hero Background"
+                    fill
+                    className=" "
+                />
+            </div>
             <div className="absolute text-center top-0 right-0">
                 <Image
                     src="/abstractlines.png"
@@ -142,7 +194,7 @@ const MindsettlerHero = ({ divRef }) => {
 
                 <div ref={divRef} className="relative z-40 wrapper bg-transparent rounded-full will-change-scroll  w-[50vw] h-[300px] md:w-80 md:h-80 lg:w-96 lg:h-96 overflow-visible xl:w-[28rem] xl:h-[28rem] flex items-center justify-center">
                     <div ref={circleRef} className="w-full h-full absolute z-40 bg-transparent">
-                        <Canvas frameloop='always'>
+                        <Canvas >
                             <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={50} near={0.1} far={1000} />
                             <ambientLight intensity={0.5} />
                             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
@@ -164,7 +216,7 @@ const MindsettlerHero = ({ divRef }) => {
                     {/* (Kept your text content here mostly the same) */}
                     <div className="max-w-2xl mx-auto  lg:mx-0 mt-16">
                         <div className=" mb-1 text- lg:text-left">
-                            <p className="text-frozenWater font-medium tracking-widest uppercase text-xs md:text-sm">Reclaim Your Inner Space</p>
+                            <p className="text-Primary-pink font-medium tracking-widest uppercase text-xs md:text-sm">Reclaim Your Inner Space</p>
                         </div>
                         <h1 ref={headlineRef} className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-2  lg:text-left">
                             {/* ... Shuffle Component ... */}
@@ -188,7 +240,7 @@ const MindsettlerHero = ({ divRef }) => {
                             />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-teal-200">Chaos Within.</span>
                         </h1>
-                        <div ref={subheadRef} className="text-base md:text-md lg:text-lg text-frozenWater mb-2 leading-relaxed max-w-lg mx-auto lg:mx-0  lg:text-left">
+                        <div ref={subheadRef} className="text-base md:text-md lg:text-lg text-Primary-purple/80 font-light mb-2 leading-relaxed max-w-lg mx-auto lg:mx-0  lg:text-left">
                             <TextGenerateEffect words={"MindSettler is a psycho-education and mental well-being platform offering structured online and offline sessions to help you understand your thoughts, emotions, and life challenges in a safe and confidential space."} duration={0.4} staggerDelay={0.08} />
                         </div>
                         <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 justify-start">
