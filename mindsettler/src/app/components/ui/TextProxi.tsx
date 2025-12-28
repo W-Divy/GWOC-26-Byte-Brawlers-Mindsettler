@@ -153,7 +153,7 @@ const VariableProximity = forwardRef<HTMLSpanElement, VariableProximityProps>((p
             return (
               <motion.span
                 key={currentLetterIndex}
-                ref={el => {
+                ref={(el: HTMLSpanElement | null) => {
                   letterRefs.current[currentLetterIndex] = el;
                   if (el) {
                     el.style.fontVariationSettings = fromFontVariationSettings;

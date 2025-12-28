@@ -47,7 +47,7 @@ const AboutMindSettler = () => {
     const aboutref = useRef<HTMLDivElement>(null);
     const panels: React.RefObject<HTMLElement>[] = []; // Initialize this array appropriately in your component
 
-    const panelsRef = useRef([]);
+    const panelsRef = useRef<(HTMLDivElement | null)[]>([]);
     const mainHead = useRef<HTMLSpanElement>(null);
     const bottomHead = useRef<HTMLDivElement>(null);
 
@@ -374,7 +374,7 @@ const AboutMindSettler = () => {
                                     {steps.map((step, i) => (
                                         <div
                                             key={step.id}
-                                            ref={(el) => (panelsRef.current[i] = el)}
+                                            ref={(el) => {panelsRef.current[i] = el;}}
                                             className="absolute"
                                         >
                                             <h2 className="text-3xl relative   lg:text-5xl font-serif font-bold text-purple-900 mb-6 leading-tight">

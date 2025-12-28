@@ -37,7 +37,7 @@ function ResizeHandler() {
     return null;
 }
 
-const MindsettlerHero = ({ divRef }) => {
+const MindsettlerHero = ({ divRef }: { divRef: React.RefObject<HTMLDivElement | null> }) => {
     const comp = useRef(null);
 
     const heroImageRef = useRef(null);
@@ -100,7 +100,7 @@ const MindsettlerHero = ({ divRef }) => {
             if (!meshRef.current) return;
 
             const ctx = gsap.context(() => {
-                gsap.to(meshRef.current.rotation, {
+                gsap.to(meshRef.current!.rotation, {
                     y: Math.PI * 2.5,
                     ease: "none",
                     scrollTrigger: {

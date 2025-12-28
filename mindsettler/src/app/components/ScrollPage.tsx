@@ -8,7 +8,7 @@ import MindsettlerHero from "./StoryJourney";
 
 export default function Home() {
   const movingDivRef = useRef<HTMLDivElement | null>(null);
-  const sectionBRef = useRef<HTMLElement | null>(null);
+  const sectionBRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLElement | null>(null);
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);

@@ -21,8 +21,8 @@ const Process = () => {
     const desktopIconsRef = useRef<(HTMLDivElement | null)[]>([]);
     const mobileIconsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-    const desktopProgressRef = useRef<(HTMLDivElement | null)[]>([]);
-    const mobileProgressRef = useRef<(HTMLDivElement | null)[]>([]);
+    const desktopProgressRef = useRef<HTMLDivElement>(null);
+    const mobileProgressRef = useRef<HTMLDivElement>(null);
 
 
 
@@ -194,7 +194,7 @@ const Process = () => {
                         {steps.map((step, i) => (
                             <div
                                 key={i}
-                                ref={(el) => (desktopIconsRef.current[i] = el)}
+                                ref={(el) => {desktopIconsRef.current[i] = el;}}
                                 className="w-fit h-full bg-white rounded-full shadow-md flex items-center relative justify-center scale-0 opacity-0"
                             >
                                 <Image
@@ -221,7 +221,7 @@ const Process = () => {
                     {steps.map((step, i) => (
                         <div key={i} className="flex items-start gap-6">
                             <div
-                                ref={(el) => (mobileIconsRef.current[i] = el)}
+                                ref={(el) => {mobileIconsRef.current[i] = el;}}
                                 className="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center scale-0 opacity-0"
                             >
                                 {step.icon}

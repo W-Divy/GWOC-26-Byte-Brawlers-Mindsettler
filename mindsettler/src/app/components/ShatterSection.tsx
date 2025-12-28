@@ -8,7 +8,7 @@ import Image from "next/image";
 import SplitType from "split-type";
 import { contain } from "three/src/extras/TextureUtils.js";
 
-const ShatterSection = forwardRef((props, ref) => {
+const ShatterSection = forwardRef<HTMLDivElement>((props, ref) => {
   const rows = 5;
   const cols = 5;
   const tiles = Array.from({ length: rows * cols });
